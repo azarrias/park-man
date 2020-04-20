@@ -2,6 +2,8 @@
 #define GAME_H_
 
 #include <memory>
+#include <vector>
+#include "FileParser.h"
 #include "Renderer.h"
 
 class Game {
@@ -12,7 +14,8 @@ public:
     void Render();
 
 private:
-    std::unique_ptr<Renderer> renderer;
+    std::unique_ptr<Renderer> _renderer;
+    std::vector<std::vector<Tile>> _board;
 };
 
 #endif
