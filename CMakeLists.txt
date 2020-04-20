@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_CXX_EXTENSIONS False)
 
-add_executable(${CMAKE_PROJECT_NAME} src/main.cpp)
+add_executable(${CMAKE_PROJECT_NAME} "")
+include(sourcelist.cmake)
 
 target_compile_options(parkman PUBLIC "-Wall")
 target_include_directories(parkman PUBLIC ${SDL2_INCLUDE_DIRS})
