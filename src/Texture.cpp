@@ -7,10 +7,8 @@ Texture::Texture()
 {}
 
 Texture::Texture(std::shared_ptr<Renderer> renderer) 
-: _sdlTexture(nullptr, SDL_DestroyTexture)
-{
-    _renderer = renderer;
-}
+: _sdlTexture(nullptr, SDL_DestroyTexture), _renderer(renderer)
+{}
 
 bool Texture::LoadFromFile(std::string path) {
     // Load image into temporary surface

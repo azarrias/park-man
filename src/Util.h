@@ -6,4 +6,11 @@ typedef struct Vector {
     int y;
 } Vector;
 
+typedef struct Rect {
+    int x;
+    int y;
+    int w;
+    int h;
+} Rect;
+
 #endif

@@ -1,4 +1,6 @@
 target_sources(parkman PRIVATE
+    src/Animation.cpp
+    src/Animation.h
     src/Board.cpp
     src/Board.h
     src/Game.cpp
@@ -10,5 +12,5 @@ target_sources(parkman PRIVATE
     src/Renderer.h
     src/Texture.cpp
     src/Texture.h
-    src/Vector.h
+    src/Util.h
 )

@@ -1,11 +1,11 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
+#include "Animation.h"
 #include <memory>
 #include <string>
-#include "Texture.h"
 #include <vector>
-#include "Vector.h"
+#include "Util.h"
 
 class Game;
 
@@ -17,7 +17,7 @@ public:
 
 private:
     std::shared_ptr<Game> _game;
-    Texture _texture;
+    Animation _animation;
 
     Vector _pos;
     Vector _size;
