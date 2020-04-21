@@ -3,12 +3,12 @@
 #include "Game.h"
 
 int main() {
-    Game game;
-    if (!game.Init()) 
+    std::shared_ptr<Game> game = std::make_shared<Game>();
+    if (!game->Init()) 
         return EXIT_FAILURE;
 
-    while (game.Update()) {
-        game.Render();
+    while (game->Update()) {
+        game->Render();
     }
 
     return EXIT_SUCCESS;

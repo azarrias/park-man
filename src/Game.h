@@ -3,19 +3,18 @@
 
 #include <memory>
 #include <vector>
-#include "FileParser.h"
+#include "Board.h"
 #include "Renderer.h"
 
-class Game {
+class Game : public std::enable_shared_from_this<Game> {
 public:
     Game();
     bool Init();
     bool Update();
     void Render();
-
-private:
+    std::shared_ptr<Game> get_shared_this() { return shared_from_this(); }
     std::unique_ptr<Renderer> _renderer;
-    std::vector<std::vector<Tile>> _board;
+    std::unique_ptr<Board> _board;
 };
 
 #endif

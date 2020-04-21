@@ -38,9 +38,21 @@ bool Renderer::Init() {
     return true;
 }
 
-void Renderer::ClearScreen(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-    SDL_SetRenderDrawColor(_sdlRenderer.get(), r, g, b, a);
-    SDL_RenderClear(_sdlRenderer.get());
+int Renderer::Clear() {
+    return SDL_RenderClear(_sdlRenderer.get());
+}
+
+int Renderer::FillRect(int x, int y, int w, int h) {
+    SDL_Rect rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = w;
+    rect.h = h;
+    return SDL_RenderFillRect(_sdlRenderer.get(), &rect);
+}
+
+int Renderer::SetDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    return SDL_SetRenderDrawColor(_sdlRenderer.get(), r, g, b, a);
 }
 
 void Renderer::UpdateScreen() {

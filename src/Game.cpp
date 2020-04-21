@@ -1,6 +1,6 @@
 #include <memory>
 #include <iostream>
-#include "FileParser.h"
+#include "Board.h"
 #include "Game.h"
 
 Game::Game() {
@@ -8,9 +8,9 @@ Game::Game() {
 }
 
 bool Game::Init() {
-    _board = FileParser::ReadBoardFile("../assets/map.dat");
-    if (_board.empty()) {
-        std::cerr << "FileParser could not read board from file.\n";
+    _board = std::make_unique<Board>(get_shared_this());
+    if(!_board->LoadFromFile("../assets/map.dat")) {
+        std::cerr << "Could not load board from file.\n";
         return false;
     }
     return _renderer->Init();
@@ -27,6 +27,8 @@ bool Game::Update() {
 }
 
 void Game::Render() {
-    _renderer->ClearScreen(0, 0, 0, 255);
+    _renderer->SetDrawColor(0, 0, 0, 255);
+    _renderer->Clear();
+    _board->Render();
     _renderer->UpdateScreen();
 }
