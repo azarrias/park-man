@@ -12,6 +12,7 @@ enum class Tile { Wall, Dot, Powerup, Empty };
 class Board {
 public:
     Board(std::shared_ptr<Game> game);
+    bool Init();
     std::vector<Tile> ParseLine(std::string line);
     bool LoadFromFile(std::string path);
     void Render();
@@ -19,6 +20,10 @@ public:
 private:
     std::vector<std::vector<Tile>> _tiles;
     std::shared_ptr<Game> _game;
+    unsigned short int _x;
+    unsigned short int _y;
+    unsigned short int _w;
+    unsigned short int _h;
 };
 
 #endif

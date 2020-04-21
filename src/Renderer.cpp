@@ -1,10 +1,16 @@
 #include <iostream>
 #include "SDL2/SDL.h"
 #include "Renderer.h"
+#include "Game.h"
 
 Renderer::Renderer()
 : _sdlWindow(nullptr, SDL_DestroyWindow), _sdlRenderer(nullptr, SDL_DestroyRenderer)
 {}
+
+Renderer::Renderer(std::shared_ptr<Game> game)
+: _sdlWindow(nullptr, SDL_DestroyWindow), _sdlRenderer(nullptr, SDL_DestroyRenderer) {
+    _game = game;
+}
 
 Renderer::~Renderer()
 {
@@ -20,7 +26,7 @@ bool Renderer::Init() {
 
     // Create window
     _sdlWindow.reset(SDL_CreateWindow("Park-Man", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-                                        _screenWidth, _screenHeight, SDL_WINDOW_SHOWN));
+                                        _game->_screenWidth, _game->_screenHeight, SDL_WINDOW_SHOWN));
     if (nullptr == _sdlWindow) {
         std::cerr << "Window could not be created.\n";
         std::cerr << "SDL_Error: " << SDL_GetError() << "\n";
@@ -53,6 +59,10 @@ int Renderer::FillRect(int x, int y, int w, int h) {
 
 int Renderer::SetDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     return SDL_SetRenderDrawColor(_sdlRenderer.get(), r, g, b, a);
+}
+
+int Renderer::SetVirtualResolution(int w, int h) {
+    return SDL_RenderSetLogicalSize(_sdlRenderer.get(), w, h);
 }
 
 void Renderer::UpdateScreen() {

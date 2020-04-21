@@ -3,17 +3,17 @@
 #include "Board.h"
 #include "Game.h"
 
-Game::Game() {
-    _renderer = std::make_unique<Renderer>();
-}
-
 bool Game::Init() {
     _board = std::make_unique<Board>(get_shared_this());
-    if(!_board->LoadFromFile("../assets/map.dat")) {
-        std::cerr << "Could not load board from file.\n";
+    if (!_board->Init())
         return false;
-    }
-    return _renderer->Init();
+
+    _renderer = std::make_unique<Renderer>(get_shared_this());
+    if (!_renderer->Init())
+        return false;
+
+    _renderer->SetVirtualResolution(640, 480);
+    return true;
 }
 
 bool Game::Update() {

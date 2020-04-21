@@ -1,12 +1,34 @@
 #include "Board.h"
 #include "Game.h"
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <vector>
 #include <string>
 
 Board::Board(std::shared_ptr<Game> game) {
     _game = game;
+}
+
+bool Board::Init() {
+    if(!LoadFromFile("../assets/map.dat")) {
+        std::cerr << "Could not load board from file.\n";
+        return false;
+    }
+
+    unsigned short int numRows = _tiles.size();
+    unsigned short int numCols = _tiles[0].size();
+    unsigned short int tileWidth = _game->_tileWidth;
+    unsigned short int tileHeight = _game->_tileHeight;
+    unsigned short int virtualWidth = _game->_virtualWidth;
+    unsigned short int virtualHeight = _game->_virtualHeight;
+
+    _x = (virtualWidth - tileWidth * numCols) / 2;
+    _y = (virtualHeight - tileHeight * numRows) / 2;
+    _w = numCols * tileWidth;
+    _h = numRows * tileHeight;
+
+    return true;
 }
 
 std::vector<Tile> Board::ParseLine(std::string line) {
@@ -45,16 +67,6 @@ bool Board::LoadFromFile(std::string path) {
 }
 
 void Board::Render() {
-    unsigned short int numRows = _tiles.size();
-    unsigned short int numCols = _tiles[0].size();
-    unsigned short int tileWidth = _game->_renderer->_tileWidth;
-    unsigned short int tileHeight = _game->_renderer->_tileHeight;
-    unsigned short int screenWidth = _game->_renderer->_screenWidth;
-    unsigned short int screenHeight = _game->_renderer->_screenHeight;
-
-    unsigned short int xPos = (screenWidth - tileWidth * numCols) / 2;
-    unsigned short int yPos = (screenHeight - tileHeight * numRows) / 2;
-
     _game->_renderer->SetDrawColor(0, 0, 255, 255);
-    _game->_renderer->FillRect(xPos, yPos, tileWidth * numCols, tileHeight * numRows);
+    _game->_renderer->FillRect(_x, _y, _w, _h);
 }
