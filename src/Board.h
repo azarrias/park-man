@@ -20,6 +20,8 @@ public:
 private:
     std::vector<std::vector<Tile>> _tiles;
     std::shared_ptr<Game> _game;
+    unsigned short int _rows;
+    unsigned short int _cols;
     unsigned short int _x;
     unsigned short int _y;
     unsigned short int _w;

@@ -16,17 +16,17 @@ bool Board::Init() {
         return false;
     }
 
-    unsigned short int numRows = _tiles.size();
-    unsigned short int numCols = _tiles[0].size();
+    _rows = _tiles.size();
+    _cols = _tiles[0].size();
     unsigned short int tileWidth = _game->_tileWidth;
     unsigned short int tileHeight = _game->_tileHeight;
     unsigned short int virtualWidth = _game->_virtualWidth;
     unsigned short int virtualHeight = _game->_virtualHeight;
 
-    _x = (virtualWidth - tileWidth * numCols) / 2;
-    _y = (virtualHeight - tileHeight * numRows) / 2;
-    _w = numCols * tileWidth;
-    _h = numRows * tileHeight;
+    _x = (virtualWidth - tileWidth * _cols) / 2;
+    _y = (virtualHeight - tileHeight * _rows) / 2;
+    _w = _cols * tileWidth;
+    _h = _rows * tileHeight;
 
     return true;
 }
@@ -67,6 +67,12 @@ bool Board::LoadFromFile(std::string path) {
 }
 
 void Board::Render() {
-    _game->_renderer->SetDrawColor(0, 0, 255, 255);
-    _game->_renderer->FillRect(_x, _y, _w, _h);
+    for (size_t y = 0; y < _rows; ++y) {
+        for (size_t x = 0; x < _cols; ++x) {
+            if (Tile::Wall == _tiles[y][x]) {
+                _game->_renderer->SetDrawColor(120, 120, 255, 255);
+                _game->_renderer->FillRect(_x + x * _game->_tileWidth, _y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);                
+            }
+        }
+    }
 }
