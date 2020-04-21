@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "Board.h"
+#include "Player.h"
 #include "Renderer.h"
 
 class Game : public std::enable_shared_from_this<Game> {
@@ -14,6 +15,7 @@ public:
     std::shared_ptr<Game> get_shared_this() { return shared_from_this(); }
     std::unique_ptr<Renderer> _renderer;
     std::unique_ptr<Board> _board;
+    std::unique_ptr<Player> _player;
     static constexpr unsigned short int _screenWidth{1280};
     static constexpr unsigned short int _screenHeight{960};
     static constexpr unsigned short int _virtualWidth{640};

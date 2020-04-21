@@ -23,28 +23,38 @@ bool Board::Init() {
     unsigned short int virtualWidth = _game->_virtualWidth;
     unsigned short int virtualHeight = _game->_virtualHeight;
 
-    _x = (virtualWidth - tileWidth * _cols) / 2;
-    _y = (virtualHeight - tileHeight * _rows) / 2;
-    _w = _cols * tileWidth;
-    _h = _rows * tileHeight;
+    _pos.x = (virtualWidth - tileWidth * _cols) / 2;
+    _pos.y = (virtualHeight - tileHeight * _rows) / 2;
+    _size.x = _cols * tileWidth;
+    _size.y = _rows * tileHeight;
 
     return true;
 }
 
-std::vector<Tile> Board::ParseLine(std::string line) {
+std::vector<Tile> Board::ParseLine(std::string line, unsigned short int rownum) {
     std::istringstream sline(line);
     char c;
     std::vector<Tile> row;
+    unsigned short int colnum = 0;
     while (sline >> c) {
-        if (c == 'X') {
-            row.emplace_back(Tile::Wall);
-        } else if (c == 'o') {
-            row.emplace_back(Tile::Dot);
-        } else if (c == 'O') {
-            row.emplace_back(Tile::Powerup);
-        } else {
-            row.emplace_back(Tile::Empty);
+        switch (c) {
+            case 'X':
+                row.emplace_back(Tile::Wall);
+                break;
+            case 'o':
+                row.emplace_back(Tile::Dot);
+                break;
+            case 'O':
+                row.emplace_back(Tile::Powerup);
+                break;
+            case 'P':
+                _playerIniPos.x = colnum;
+                _playerIniPos.y = rownum;
+            default:
+                row.emplace_back(Tile::Empty);
         }
+
+        ++colnum;
     }
     return row;
 }
@@ -54,9 +64,11 @@ bool Board::LoadFromFile(std::string path) {
     std::vector<std::vector<Tile>> board{};
     if (myfile) {
         std::string line;
+        unsigned short int rownum = 0;
         while (getline(myfile, line)) {
-            std::vector<Tile> row = ParseLine(line);
+            std::vector<Tile> row = ParseLine(line, rownum);
             board.emplace_back(row);
+            ++rownum;
         }
     }
     if (board.empty())
@@ -72,20 +84,24 @@ void Board::Render() {
             switch (_tiles[y][x]) {
                 case Tile::Wall:
                     _game->_renderer->SetDrawColor(120, 120, 255, 255);
-                    _game->_renderer->FillRect(_x + x * _game->_tileWidth, _y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);
+                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth, _pos.y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);
                     break;
-                case Tile::Dot:
+                case Tile::Dot: {
+                    Vector dotSize{2, 2};
                     _game->_renderer->SetDrawColor(255, 255, 255, 255);
-                    _game->_renderer->FillRect(_x + x * _game->_tileWidth + _game->_tileWidth / 2 - 2 / 2, 
-                        _y + y * _game->_tileHeight + _game->_tileHeight / 2 - 2 / 2, 
-                        2, 2);
+                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - dotSize.x / 2, 
+                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - dotSize.y / 2, 
+                        dotSize.x, dotSize.y);
                     break;
-                case Tile::Powerup:
+                }
+                case Tile::Powerup: {
+                    Vector powerupSize{4, 4};
                     _game->_renderer->SetDrawColor(255, 255, 255, 255);
-                    _game->_renderer->FillRect(_x + x * _game->_tileWidth + _game->_tileWidth / 2 - 4 / 2, 
-                        _y + y * _game->_tileHeight + _game->_tileHeight / 2 - 4 / 2, 
-                        4, 4);
+                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - powerupSize.x / 2, 
+                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - powerupSize.y / 2, 
+                        powerupSize.x, powerupSize.y);
                     break;
+                }
                 case Tile::Empty:
                     break;
             }

@@ -8,6 +8,10 @@ bool Game::Init() {
     if (!_board->Init())
         return false;
 
+    _player = std::make_unique<Player>(get_shared_this());
+    if (!_player->Init())
+        return false;
+
     _renderer = std::make_unique<Renderer>(get_shared_this());
     if (!_renderer->Init())
         return false;

@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include "Vector.h"
 
 class Game;
 
@@ -13,19 +14,22 @@ class Board {
 public:
     Board(std::shared_ptr<Game> game);
     bool Init();
-    std::vector<Tile> ParseLine(std::string line);
+    std::vector<Tile> ParseLine(std::string line, unsigned short int rownum);
     bool LoadFromFile(std::string path);
     void Render();
 
 private:
     std::vector<std::vector<Tile>> _tiles;
     std::shared_ptr<Game> _game;
+
+    // tile set properties
     unsigned short int _rows;
     unsigned short int _cols;
-    unsigned short int _x;
-    unsigned short int _y;
-    unsigned short int _w;
-    unsigned short int _h;
+    Vector _pos;
+    Vector _size;
+
+    // store starting position for game entities
+    Vector _playerIniPos;
 };
 
 #endif
