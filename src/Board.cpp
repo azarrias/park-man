@@ -69,9 +69,25 @@ bool Board::LoadFromFile(std::string path) {
 void Board::Render() {
     for (size_t y = 0; y < _rows; ++y) {
         for (size_t x = 0; x < _cols; ++x) {
-            if (Tile::Wall == _tiles[y][x]) {
-                _game->_renderer->SetDrawColor(120, 120, 255, 255);
-                _game->_renderer->FillRect(_x + x * _game->_tileWidth, _y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);                
+            switch (_tiles[y][x]) {
+                case Tile::Wall:
+                    _game->_renderer->SetDrawColor(120, 120, 255, 255);
+                    _game->_renderer->FillRect(_x + x * _game->_tileWidth, _y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);
+                    break;
+                case Tile::Dot:
+                    _game->_renderer->SetDrawColor(255, 255, 255, 255);
+                    _game->_renderer->FillRect(_x + x * _game->_tileWidth + _game->_tileWidth / 2 - 2 / 2, 
+                        _y + y * _game->_tileHeight + _game->_tileHeight / 2 - 2 / 2, 
+                        2, 2);
+                    break;
+                case Tile::Powerup:
+                    _game->_renderer->SetDrawColor(255, 255, 255, 255);
+                    _game->_renderer->FillRect(_x + x * _game->_tileWidth + _game->_tileWidth / 2 - 4 / 2, 
+                        _y + y * _game->_tileHeight + _game->_tileHeight / 2 - 4 / 2, 
+                        4, 4);
+                    break;
+                case Tile::Empty:
+                    break;
             }
         }
     }
