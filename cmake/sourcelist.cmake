@@ -8,5 +8,7 @@ target_sources(parkman PRIVATE
     src/Player.h
     src/Renderer.cpp
     src/Renderer.h
+    src/Texture.cpp
+    src/Texture.h
     src/Vector.h
 )

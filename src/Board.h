@@ -18,9 +18,8 @@ public:
     bool LoadFromFile(std::string path);
     void Render();
 
-private:
-    std::vector<std::vector<Tile>> _tiles;
-    std::shared_ptr<Game> _game;
+    // store starting position for game entities
+    Vector _playerIniPos;
 
     // tile set properties
     unsigned short int _rows;
@@ -28,8 +27,9 @@ private:
     Vector _pos;
     Vector _size;
 
-    // store starting position for game entities
-    Vector _playerIniPos;
+private:
+    std::vector<std::vector<Tile>> _tiles;
+    std::shared_ptr<Game> _game;
 };
 
 #endif

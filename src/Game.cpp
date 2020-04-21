@@ -4,6 +4,12 @@
 #include "Game.h"
 
 bool Game::Init() {
+    _renderer = std::make_shared<Renderer>(get_shared_this());
+    if (!_renderer->Init())
+        return false;
+
+    _renderer->SetVirtualResolution(640, 480);
+
     _board = std::make_unique<Board>(get_shared_this());
     if (!_board->Init())
         return false;
@@ -12,12 +18,7 @@ bool Game::Init() {
     if (!_player->Init())
         return false;
 
-    _renderer = std::make_unique<Renderer>(get_shared_this());
-    if (!_renderer->Init())
-        return false;
-
-    _renderer->SetVirtualResolution(640, 480);
-    return true;
+    return true;    
 }
 
 bool Game::Update() {
@@ -34,5 +35,6 @@ void Game::Render() {
     _renderer->SetDrawColor(0, 0, 0, 255);
     _renderer->Clear();
     _board->Render();
+    _player->Render();
     _renderer->UpdateScreen();
 }

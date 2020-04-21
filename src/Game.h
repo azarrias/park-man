@@ -13,7 +13,7 @@ public:
     bool Update();
     void Render();
     std::shared_ptr<Game> get_shared_this() { return shared_from_this(); }
-    std::unique_ptr<Renderer> _renderer;
+    std::shared_ptr<Renderer> _renderer;
     std::unique_ptr<Board> _board;
     std::unique_ptr<Player> _player;
     static constexpr unsigned short int _screenWidth{1280};

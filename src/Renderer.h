@@ -6,7 +6,7 @@
 
 class Game;
 
-class Renderer {
+class Renderer : public std::enable_shared_from_this<Renderer> {
 public:
     Renderer();
     Renderer(std::shared_ptr<Game> game);
@@ -17,11 +17,11 @@ public:
     int SetDrawColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
     int SetVirtualResolution(int w, int h);
     void UpdateScreen();
+    std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> _sdlRenderer;
 
 private:
     static constexpr bool _vsync{true};
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> _sdlWindow;
-    std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> _sdlRenderer;
     std::shared_ptr<Game> _game;
 };
 

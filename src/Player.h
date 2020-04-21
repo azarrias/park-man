@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <string>
+#include "Texture.h"
 #include <vector>
 #include "Vector.h"
 
@@ -16,6 +17,7 @@ public:
 
 private:
     std::shared_ptr<Game> _game;
+    Texture _texture;
 
     Vector _pos;
     Vector _size;

@@ -4,11 +4,11 @@
 #include "Game.h"
 
 Renderer::Renderer()
-: _sdlWindow(nullptr, SDL_DestroyWindow), _sdlRenderer(nullptr, SDL_DestroyRenderer)
+: _sdlRenderer(nullptr, SDL_DestroyRenderer), _sdlWindow(nullptr, SDL_DestroyWindow)
 {}
 
 Renderer::Renderer(std::shared_ptr<Game> game)
-: _sdlWindow(nullptr, SDL_DestroyWindow), _sdlRenderer(nullptr, SDL_DestroyRenderer) {
+: _sdlRenderer(nullptr, SDL_DestroyRenderer), _sdlWindow(nullptr, SDL_DestroyWindow) {
     _game = game;
 }
 
