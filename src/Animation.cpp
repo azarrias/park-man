@@ -4,20 +4,32 @@
 #include <iostream>
 
 Animation::Animation()
+: _counter(0), _currentFrame(0)
 {}
 
 Animation::Animation(Texture texture)
-: _texture(std::move(texture))
+: _texture(std::move(texture)), _counter(0), _currentFrame(0)
 {}
 
 bool Animation::LoadFromFile(std::string path) {
     return _texture.LoadFromFile(path);
 }
 
-void Animation::AddFrame(Rect r) {
-    _clips.emplace_back(r);
+void Animation::AddFrame(Frame f) {
+    _frames.emplace_back(f);
 }
 
-void Animation::Render() {
+void Animation::Update() {
+    if (_frames.size() > 1) {
+        if (_counter >= _frames[_currentFrame].duration) {
+            ++_currentFrame;
+            _counter = 0;
+        }
 
+        ++_counter;
+
+        if (_currentFrame >= _frames.size()) {
+            _currentFrame = 0;
+        }
+    }
 }

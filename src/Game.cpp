@@ -28,6 +28,7 @@ bool Game::Update() {
             return false;
         }
     }
+    _player->Update();
     return true;
 }
 

@@ -34,7 +34,12 @@ bool Renderer::Init() {
     }
 
     // Create renderer
-    _sdlRenderer.reset(SDL_CreateRenderer(_sdlWindow.get(), -1, SDL_RENDERER_ACCELERATED));
+    Uint32 flags = SDL_RENDERER_ACCELERATED;
+    if (_vsync) {
+        flags |= SDL_RENDERER_PRESENTVSYNC;
+    }
+
+    _sdlRenderer.reset(SDL_CreateRenderer(_sdlWindow.get(), -1, flags));
     if (nullptr == _sdlRenderer) {
         std::cerr << "Renderer could not be created.\n";
         std::cerr << "SDL_Error: " << SDL_GetError() << "\n";

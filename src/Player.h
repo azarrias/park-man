@@ -13,6 +13,7 @@ class Player {
 public:
     Player(std::shared_ptr<Game> game);
     bool Init();
+    void Update();
     void Render();
 
 private:
