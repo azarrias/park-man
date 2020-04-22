@@ -12,6 +12,7 @@ enum class Tile { Wall, Dot, Powerup, Empty };
 
 class Board {
 public:
+    Board();
     Board(std::shared_ptr<Game> game);
     bool Init();
     std::vector<Tile> ParseLine(std::string line, unsigned short int rownum);

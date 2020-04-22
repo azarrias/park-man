@@ -11,6 +11,7 @@ class Game;
 
 class Player {
 public:
+    Player();
     Player(std::shared_ptr<Game> game);
     bool Init();
     void Update();

@@ -6,6 +6,9 @@
 #include <vector>
 #include <string>
 
+Board::Board()
+{}
+
 Board::Board(std::shared_ptr<Game> game) {
     _game = game;
 }
