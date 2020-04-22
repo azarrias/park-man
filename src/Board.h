@@ -14,9 +14,11 @@ class Board {
 public:
     Board();
     Board(std::shared_ptr<Game> game);
+    Tile GetTile(const Vector& coord) const;
     bool Init();
     std::vector<Tile> ParseLine(std::string line, unsigned short int rownum);
     bool LoadFromFile(std::string path);
+    Vector PointToTile(int x, int y) const;
     void Render();
 
     // store starting position for game entities

@@ -81,6 +81,30 @@ bool Board::LoadFromFile(std::string path) {
     return true;
 }
 
+// Get tile value given tile map coordinates
+Tile Board::GetTile(const Vector& coord) const {
+    return _tiles[coord.y][coord.x];
+}
+
+// Translates point coordinates to tile map coordinates
+Vector Board::PointToTile(int x, int y) const {
+    // if the point is out of the board bounds, return tile coordinates (-1, -1)
+    int coordx = x / _game->_tileWidth;
+    int coordy = y / _game->_tileHeight;
+
+    if (coordx < 0)
+        coordx = _cols - 1;
+    else if (coordx >= _cols)
+        coordx = 0;
+
+    if (coordy < 0)
+        coordy = _rows - 1;
+    else if (coordy >= _rows)
+        coordy = 0;
+
+    return Vector{coordx, coordy};
+}
+
 void Board::Render() {
     for (size_t y = 0; y < _rows; ++y) {
         for (size_t x = 0; x < _cols; ++x) {
