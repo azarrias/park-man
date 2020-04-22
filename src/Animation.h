@@ -1,3 +1,6 @@
+#ifndef ANIMATION_H_
+#define ANIMATION_H_
+
 #include "Texture.h"
 #include "Util.h"
 #include <vector>
@@ -21,3 +24,5 @@ public:
 private:
     unsigned short int _counter;
 };
+
+#endif

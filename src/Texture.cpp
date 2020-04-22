@@ -33,11 +33,11 @@ bool Texture::LoadFromFile(std::string path) {
     return true;
 }
 
-void Texture::Render(int posx, int posy) {
+void Texture::Render(int posx, int posy) const {
     Render(posx, posy, 0, 0, _w, _h);
 }
 
-void Texture::Render(int px, int py, int qx, int qy, int qw, int qh) {
+void Texture::Render(int px, int py, int qx, int qy, int qw, int qh) const {
     SDL_Rect quad{qx, qy, qw, qh};
     SDL_Rect coord{px, py, qw, qh};
     SDL_RenderCopy(_renderer->_sdlRenderer.get(), _sdlTexture.get(), &quad, &coord);

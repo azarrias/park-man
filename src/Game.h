@@ -5,6 +5,7 @@
 #include <vector>
 #include "Board.h"
 #include "Controller.h"
+#include "Enemy.h"
 #include "Player.h"
 #include "Renderer.h"
 
@@ -17,6 +18,8 @@ public:
     std::shared_ptr<Renderer> _renderer;
     Board _board;
     Player _player;
+    std::vector<Enemy> _enemies;
+
     static constexpr unsigned short int _screenWidth{1280};
     static constexpr unsigned short int _screenHeight{960};
     static constexpr unsigned short int _virtualWidth{640};

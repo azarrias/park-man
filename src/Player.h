@@ -29,9 +29,6 @@ private:
     Vector _pos;
     Vector _size;
     static constexpr unsigned short int _speed{ 1 };
-
-    // store starting position for game entities
-    Vector _playerIniPos;
 };
 
 #endif

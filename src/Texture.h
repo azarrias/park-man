@@ -11,8 +11,8 @@ public:
     Texture();
     Texture(std::shared_ptr<Renderer> renderer);
     bool LoadFromFile(std::string path);
-    void Render(int px, int py);
-    void Render(int px, int py, int qx, int qy, int qw, int qh);
+    void Render(int px, int py) const;
+    void Render(int px, int py, int qx, int qy, int qw, int qh) const;
 private:
     std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> _sdlTexture;
     std::shared_ptr<Renderer> _renderer;

@@ -23,6 +23,7 @@ public:
 
     // store starting position for game entities
     Vector _playerIniPos;
+    std::vector<Vector> _enemiesIniPos;
 
     // tile set properties
     unsigned short int _rows;

@@ -3,6 +3,10 @@ target_sources(parkman PRIVATE
     src/Animation.h
     src/Board.cpp
     src/Board.h
+	src/Controller.cpp
+	src/Controller.h
+	src/Enemy.cpp
+	src/Enemy.h
     src/Game.cpp
     src/Game.h
     src/main.cpp

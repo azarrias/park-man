@@ -51,8 +51,11 @@ std::vector<Tile> Board::ParseLine(std::string line, unsigned short int rownum) 
                 row.emplace_back(Tile::Powerup);
                 break;
             case 'P':
-                _playerIniPos.x = colnum;
-                _playerIniPos.y = rownum;
+                _playerIniPos = Vector{colnum, rownum};
+                row.emplace_back(Tile::Empty);
+                break;
+            case 'E':
+                _enemiesIniPos.emplace_back(Vector{ colnum, rownum });
             default:
                 row.emplace_back(Tile::Empty);
         }
