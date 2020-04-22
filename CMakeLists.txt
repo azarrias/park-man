@@ -14,5 +14,5 @@ find_package(SDL2_image REQUIRED)
 
 target_compile_options(parkman PUBLIC "-Wall")
 target_include_directories(parkman PUBLIC ${SDL2_INCLUDE_DIRS} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
-string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
+string(STRIP "${SDL2_LIBRARIES}" SDL2_LIBRARIES)
 target_link_libraries(parkman PUBLIC ${SDL2_LIBRARIES} PUBLIC ${SDL2_IMAGE_LIBRARIES})
