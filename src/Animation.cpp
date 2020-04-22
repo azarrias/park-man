@@ -4,11 +4,11 @@
 #include <iostream>
 
 Animation::Animation()
-: _counter(0), _currentFrame(0)
+: _currentFrame(0), _counter(0)
 {}
 
 Animation::Animation(Texture texture)
-: _texture(std::move(texture)), _counter(0), _currentFrame(0)
+: _texture(std::move(texture)), _currentFrame(0), _counter(0)
 {}
 
 bool Animation::LoadFromFile(std::string path) {
