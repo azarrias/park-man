@@ -3,9 +3,6 @@
 #include "Board.h"
 #include "Game.h"
 
-Game::Game()
-{}
-
 bool Game::Init() {
     _renderer = std::make_shared<Renderer>(get_shared_this());
     if (!_renderer->Init())

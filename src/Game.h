@@ -10,7 +10,6 @@
 
 class Game : public std::enable_shared_from_this<Game> {
 public:
-    Game();
     bool Init();
     bool Update();
     void Render();
