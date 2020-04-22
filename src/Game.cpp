@@ -22,12 +22,8 @@ bool Game::Init() {
 }
 
 bool Game::Update() {
-    SDL_Event e;
-    while (SDL_PollEvent(&e)) {
-        if (SDL_QUIT == e.type) {
-            return false;
-        }
-    }
+    if (!_controller.HandleInput(_player))
+        return false;
     _player.Update();
     return true;
 }

@@ -4,7 +4,8 @@
 #include "Player.h"
 
 class Controller {
-	void HandleInput(Player& player) const;
+public:
+	bool HandleInput(Player& player) const;
 };
 
 #endif

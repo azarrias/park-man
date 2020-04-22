@@ -17,12 +17,18 @@ public:
     void Update();
     void Render();
 
+    void MoveUp();
+    void MoveDown();
+    void MoveLeft();
+    void MoveRight();
+
 private:
     std::shared_ptr<Game> _game;
     Animation _animation;
 
     Vector _pos;
     Vector _size;
+    static constexpr unsigned short int _speed{ 2 };
 
     // store starting position for game entities
     Vector _playerIniPos;

@@ -23,6 +23,9 @@ public:
     static constexpr unsigned short int _virtualHeight{480};
     static constexpr unsigned short int _tileWidth{16};
     static constexpr unsigned short int _tileHeight{16};
+
+private:
+    Controller _controller;
 };
 
 #endif
