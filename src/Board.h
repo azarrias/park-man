@@ -14,6 +14,7 @@ class Board {
 public:
     Board();
     Board(std::shared_ptr<Game> game);
+    void EmptyTile(const Vector& coord);
     Tile GetTile(const Vector& coord) const;
     bool Init();
     std::vector<Tile> ParseLine(std::string line, unsigned short int rownum);
@@ -28,6 +29,7 @@ public:
     // tile set properties
     unsigned short int _rows;
     unsigned short int _cols;
+    unsigned short int _dotsCounter;
     Vector _pos;
     Vector _size;
 

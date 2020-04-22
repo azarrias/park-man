@@ -26,6 +26,8 @@ public:
     static constexpr unsigned short int _virtualHeight{480};
     static constexpr unsigned short int _tileWidth{16};
     static constexpr unsigned short int _tileHeight{16};
+    static constexpr unsigned short int _dotSize{2};
+    static constexpr unsigned short int _powerupSize{4};
 
 private:
     Controller _controller;

@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "Animation.h"
+#include "Collider.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -22,12 +23,14 @@ public:
     void MoveLeft();
     void MoveRight();
 
+    Vector _pos;
+    Vector _size;
+
 private:
     std::shared_ptr<Game> _game;
     Animation _animation;
+    Collider _collider;
 
-    Vector _pos;
-    Vector _size;
     static constexpr unsigned short int _speed{ 1 };
 };
 

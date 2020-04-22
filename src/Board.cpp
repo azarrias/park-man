@@ -13,6 +13,16 @@ Board::Board(std::shared_ptr<Game> game) {
     _game = game;
 }
 
+void Board::EmptyTile(const Vector& coord)
+{
+    _tiles[coord.y][coord.x] = Tile::Empty;
+}
+
+// Get tile value given tile map coordinates
+Tile Board::GetTile(const Vector& coord) const {
+    return _tiles[coord.y][coord.x];
+}
+
 bool Board::Init() {
     if(!LoadFromFile("../assets/map.dat")) {
         std::cerr << "Could not load board from file.\n";
@@ -46,9 +56,11 @@ std::vector<Tile> Board::ParseLine(std::string line, unsigned short int rownum) 
                 break;
             case 'o':
                 row.emplace_back(Tile::Dot);
+                ++_dotsCounter;
                 break;
             case 'O':
                 row.emplace_back(Tile::Powerup);
+                ++_dotsCounter;
                 break;
             case 'P':
                 _playerIniPos = Vector{colnum, rownum};
@@ -84,11 +96,6 @@ bool Board::LoadFromFile(std::string path) {
     return true;
 }
 
-// Get tile value given tile map coordinates
-Tile Board::GetTile(const Vector& coord) const {
-    return _tiles[coord.y][coord.x];
-}
-
 // Translates point coordinates to tile map coordinates
 Vector Board::PointToTile(int x, int y) const {
     // if the point is out of the board bounds, return tile coordinates (-1, -1)
@@ -117,19 +124,17 @@ void Board::Render() {
                     _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth, _pos.y + y * _game->_tileHeight, _game->_tileWidth, _game->_tileHeight);
                     break;
                 case Tile::Dot: {
-                    Vector dotSize{2, 2};
                     _game->_renderer->SetDrawColor(255, 255, 255, 255);
-                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - dotSize.x / 2, 
-                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - dotSize.y / 2, 
-                        dotSize.x, dotSize.y);
+                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - _game->_dotSize / 2, 
+                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - _game->_dotSize / 2,
+                        _game->_dotSize, _game->_dotSize);
                     break;
                 }
                 case Tile::Powerup: {
-                    Vector powerupSize{4, 4};
                     _game->_renderer->SetDrawColor(255, 255, 255, 255);
-                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - powerupSize.x / 2, 
-                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - powerupSize.y / 2, 
-                        powerupSize.x, powerupSize.y);
+                    _game->_renderer->FillRect(_pos.x + x * _game->_tileWidth + _game->_tileWidth / 2 - _game->_powerupSize / 2,
+                        _pos.y + y * _game->_tileHeight + _game->_tileHeight / 2 - _game->_powerupSize / 2,
+                        _game->_powerupSize, _game->_powerupSize);
                     break;
                 }
                 case Tile::Empty:
