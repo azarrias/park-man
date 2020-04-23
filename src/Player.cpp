@@ -34,20 +34,38 @@ void Player::Update() {
 }
 
 void Player::Render() {
+    double angle = 0.0;
+    switch (_orientation) {
+    case Orientation::Right:
+        angle = 0.0;
+        break;
+    case Orientation::Down:
+        angle = 90.0;
+        break;
+    case Orientation::Left:
+        angle = 180.0;
+        break;
+    case Orientation::Up:
+        angle = 270.0;
+    }
+
     _animation._texture.Render(
         _game->_board._pos.x + _pos.x, 
         _game->_board._pos.y + _pos.y, 
         _animation._frames[_animation._currentFrame].quad.x,
         _animation._frames[_animation._currentFrame].quad.y,
         _animation._frames[_animation._currentFrame].quad.w,
-        _animation._frames[_animation._currentFrame].quad.h
+        _animation._frames[_animation._currentFrame].quad.h,
+        angle
     );
 }
 
 void Player::MoveUp() {
     // keep previous position and calculate the new one
-    Vector source_pos = _pos;
+    Vector sourcePos = _pos;
+    Orientation sourceOrientation = _orientation;
     _pos.y -= _speed;
+    _orientation = Orientation::Up;
 
     // warp to the opposite side of the board
     if (_pos.y < -8)
@@ -59,8 +77,10 @@ void Player::MoveUp() {
 
     // if there is a wall, undo movement
     if (Tile::Wall == _game->_board.GetTile(tileLeftUp) ||
-        Tile::Wall == _game->_board.GetTile(tileRightUp))
-        _pos = source_pos;
+        Tile::Wall == _game->_board.GetTile(tileRightUp)) {
+        _pos = sourcePos;
+        _orientation = sourceOrientation;
+    }
     else {
         // if there is a collectible, check if the player collides with it
         HandleCollectibleCollisions(tileLeftUp);
@@ -70,8 +90,10 @@ void Player::MoveUp() {
 }
 
 void Player::MoveDown() {
-    Vector source_pos = _pos;
+    Vector sourcePos = _pos;
+    Orientation sourceOrientation = _orientation;
     _pos.y += _speed;
+    _orientation = Orientation::Down;
 
     if (_pos.y > _game->_board._size.y - 8)
         _pos.y = -8;
@@ -80,8 +102,10 @@ void Player::MoveDown() {
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileLeftDown) ||
-        Tile::Wall == _game->_board.GetTile(tileRightDown))
-        _pos = source_pos;
+        Tile::Wall == _game->_board.GetTile(tileRightDown)) {
+        _pos = sourcePos;
+        _orientation = sourceOrientation;
+    }
     else {
         HandleCollectibleCollisions(tileLeftDown);
         if (tileRightDown.x != tileLeftDown.x)
@@ -90,8 +114,10 @@ void Player::MoveDown() {
 }
 
 void Player::MoveLeft() {
-    Vector source_pos = _pos;
+    Vector sourcePos = _pos;
+    Orientation sourceOrientation = _orientation;
     _pos.x -= _speed;
+    _orientation = Orientation::Left;
 
     if (_pos.x < -8)
         _pos.x = _game->_board._size.x - 8;
@@ -100,8 +126,10 @@ void Player::MoveLeft() {
     Vector tileLeftDown = _game->_board.PointToTile(_pos.x + 2, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileLeftUp) ||
-        Tile::Wall == _game->_board.GetTile(tileLeftDown))
-        _pos = source_pos;
+        Tile::Wall == _game->_board.GetTile(tileLeftDown)) {
+        _pos = sourcePos;
+        _orientation = sourceOrientation;
+    }
     else {
         HandleCollectibleCollisions(tileLeftUp);
         if (tileLeftDown.y != tileLeftUp.y)
@@ -110,8 +138,10 @@ void Player::MoveLeft() {
 }
 
 void Player::MoveRight() {
-    Vector source_pos = _pos;
+    Vector sourcePos = _pos;
+    Orientation sourceOrientation = _orientation;
     _pos.x += _speed;
+    _orientation = Orientation::Right;
 
     if (_pos.x > _game->_board._size.x - 8)
         _pos.x = -8;
@@ -120,8 +150,10 @@ void Player::MoveRight() {
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileRightUp) ||
-        Tile::Wall == _game->_board.GetTile(tileRightDown))
-        _pos = source_pos;
+        Tile::Wall == _game->_board.GetTile(tileRightDown)) {
+        _pos = sourcePos;
+        _orientation = sourceOrientation;
+    }
     else {
         HandleCollectibleCollisions(tileRightUp);
         if (tileRightDown.y != tileRightUp.y)
@@ -129,8 +161,7 @@ void Player::MoveRight() {
     }
 }
 
-void Player::HandleCollectibleCollisions(const Vector& tileCoord)
-{
+void Player::HandleCollectibleCollisions(const Vector& tileCoord) {
     int collectibleSize = 0;
     if (Tile::Dot == _game->_board.GetTile(tileCoord))
         collectibleSize = _game->_dotSize;

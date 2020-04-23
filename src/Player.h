@@ -10,6 +10,8 @@
 
 class Game;
 
+enum class Orientation { Left, Right, Up, Down };
+
 class Player {
 public:
     Player();
@@ -32,6 +34,7 @@ private:
     std::shared_ptr<Game> _game;
     Animation _animation;
     Collider _collider;
+    Orientation _orientation;
 
     static constexpr unsigned short int _speed{ 3 };
 };
