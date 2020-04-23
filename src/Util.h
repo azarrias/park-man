@@ -13,4 +13,6 @@ typedef struct Rect {
     int h;
 } Rect;
 
+enum class Orientation { Left, Right, Up, Down };
+
 #endif

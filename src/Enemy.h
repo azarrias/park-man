@@ -2,6 +2,7 @@
 #define ENEMY_H_
 
 #include "Animation.h"
+#include <random>
 #include "Util.h"
 
 class Game;
@@ -17,8 +18,14 @@ public:
     Vector _size;
 
 private:
+    bool ReachedDestination() const;
+    void SetTargetDestination();
+    void Move();
+
     std::shared_ptr<Game> _game;
     Animation _animation;
+    Vector _targetPosition;
+    Orientation _orientation;
 
     static constexpr unsigned short int _speed{ 1 };
 };

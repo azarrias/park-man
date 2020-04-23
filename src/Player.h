@@ -10,8 +10,6 @@
 
 class Game;
 
-enum class Orientation { Left, Right, Up, Down };
-
 class Player {
 public:
     Player();
