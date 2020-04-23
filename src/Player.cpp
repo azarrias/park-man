@@ -62,64 +62,93 @@ void Player::MoveUp() {
         Tile::Wall == _game->_board.GetTile(tileRightUp))
         _pos = source_pos;
     else {
-        // if there is a dot, check if the player collides with it
-        if (Tile::Dot == _game->_board.GetTile(tileLeftUp)) {
-            Rect dot{ tileLeftUp.x * _game->_tileWidth + _game->_tileWidth / 2 - _game->_dotSize / 2,
-                tileLeftUp.y * _game->_tileHeight + _game->_tileHeight / 2 - _game->_dotSize / 2,
-                _game->_dotSize, _game->_dotSize };
-            if (_collider.IsColliding(*this, dot)) {
-                _game->_board.EmptyTile(tileLeftUp);
-                --_game->_board._dotsCounter;
-            }
-        }
-        if (tileRightUp.x != tileLeftUp.x &&
-            Tile::Dot == _game->_board.GetTile(tileRightUp)) {
-            Rect dot{ tileRightUp.x * _game->_tileWidth + _game->_tileWidth / 2 - _game->_dotSize / 2,
-                tileRightUp.y * _game->_tileHeight + _game->_tileHeight / 2 - _game->_dotSize / 2,
-                _game->_dotSize, _game->_dotSize };
-            if (_collider.IsColliding(*this, dot)) {
-                _game->_board.EmptyTile(tileRightUp);
-                --_game->_board._dotsCounter;
-            }
-        }
-
-        //if (Tile::Dot == _game->_board.GetTile(tileRightUp)) {
-
+        // if there is a collectible, check if the player collides with it
+        HandleCollectibleCollisions(tileLeftUp);
+        if (tileRightUp.x != tileLeftUp.x)
+            HandleCollectibleCollisions(tileRightUp);
     }
 }
 
 void Player::MoveDown() {
     Vector source_pos = _pos;
     _pos.y += _speed;
+
     if (_pos.y > _game->_board._size.y - 8)
         _pos.y = -8;
+
     Vector tileLeftDown = _game->_board.PointToTile(_pos.x + 2, _pos.y + 14);
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
+
     if (Tile::Wall == _game->_board.GetTile(tileLeftDown) ||
         Tile::Wall == _game->_board.GetTile(tileRightDown))
         _pos = source_pos;
+    else {
+        // if there is a collectible, check if the player collides with it
+        HandleCollectibleCollisions(tileLeftDown);
+        if (tileRightDown.x != tileLeftDown.x)
+            HandleCollectibleCollisions(tileRightDown);
+    }
 }
 
 void Player::MoveLeft() {
     Vector source_pos = _pos;
     _pos.x -= _speed;
+
     if (_pos.x < -8)
         _pos.x = _game->_board._size.x - 8;
+
     Vector tileLeftUp = _game->_board.PointToTile(_pos.x + 2, _pos.y + 2);
     Vector tileLeftDown = _game->_board.PointToTile(_pos.x + 2, _pos.y + 14);
+
     if (Tile::Wall == _game->_board.GetTile(tileLeftUp) ||
         Tile::Wall == _game->_board.GetTile(tileLeftDown))
         _pos = source_pos;
+    else {
+        // if there is a collectible, check if the player collides with it
+        HandleCollectibleCollisions(tileLeftUp);
+        if (tileLeftDown.y != tileLeftUp.y)
+            HandleCollectibleCollisions(tileLeftDown);
+    }
 }
 
 void Player::MoveRight() {
     Vector source_pos = _pos;
     _pos.x += _speed;
+
     if (_pos.x > _game->_board._size.x - 8)
         _pos.x = -8;
+
     Vector tileRightUp = _game->_board.PointToTile(_pos.x + 14, _pos.y + 2);
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
+
     if (Tile::Wall == _game->_board.GetTile(tileRightUp) ||
         Tile::Wall == _game->_board.GetTile(tileRightDown))
         _pos = source_pos;
+    else {
+        // if there is a collectible, check if the player collides with it
+        HandleCollectibleCollisions(tileRightUp);
+        if (tileRightDown.y != tileRightUp.y)
+            HandleCollectibleCollisions(tileRightDown);
+    }
+}
+
+void Player::HandleCollectibleCollisions(const Vector& tileCoord)
+{
+    int collectibleSize = 0;
+
+    if (Tile::Dot == _game->_board.GetTile(tileCoord))
+        collectibleSize = _game->_dotSize;
+    else if (Tile::Powerup == _game->_board.GetTile(tileCoord))
+        collectibleSize = _game->_powerupSize;
+    else
+        return;
+
+    Rect collectibleCollider{ tileCoord.x * _game->_tileWidth + _game->_tileWidth / 2 - collectibleSize / 2,
+        tileCoord.y * _game->_tileHeight + _game->_tileHeight / 2 - collectibleSize / 2,
+        collectibleSize, collectibleSize };
+
+    if (_collider.IsColliding(*this, collectibleCollider)) {
+        _game->_board.EmptyTile(tileCoord);
+        --_game->_board._dotsCounter;
+    }
 }

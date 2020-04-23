@@ -23,6 +23,8 @@ public:
     void MoveLeft();
     void MoveRight();
 
+    void HandleCollectibleCollisions(const Vector& tileCoord);
+
     Vector _pos;
     Vector _size;
 
