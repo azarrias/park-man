@@ -77,7 +77,9 @@ void Player::MoveUp() {
 
     // if there is a wall, undo movement
     if (Tile::Wall == _game->_board.GetTile(tileLeftUp) ||
-        Tile::Wall == _game->_board.GetTile(tileRightUp)) {
+        Tile::Wall == _game->_board.GetTile(tileRightUp) ||
+        Tile::House == _game->_board.GetTile(tileLeftUp) || 
+        Tile::House == _game->_board.GetTile(tileRightUp)) {
         _pos = sourcePos;
         _orientation = sourceOrientation;
     }
@@ -102,7 +104,9 @@ void Player::MoveDown() {
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileLeftDown) ||
-        Tile::Wall == _game->_board.GetTile(tileRightDown)) {
+        Tile::Wall == _game->_board.GetTile(tileRightDown) ||
+        Tile::House == _game->_board.GetTile(tileLeftDown) ||
+        Tile::House == _game->_board.GetTile(tileRightDown)) {
         _pos = sourcePos;
         _orientation = sourceOrientation;
     }
@@ -126,7 +130,9 @@ void Player::MoveLeft() {
     Vector tileLeftDown = _game->_board.PointToTile(_pos.x + 2, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileLeftUp) ||
-        Tile::Wall == _game->_board.GetTile(tileLeftDown)) {
+        Tile::Wall == _game->_board.GetTile(tileLeftDown) ||
+        Tile::House == _game->_board.GetTile(tileLeftUp) ||
+        Tile::House == _game->_board.GetTile(tileLeftDown)) {
         _pos = sourcePos;
         _orientation = sourceOrientation;
     }
@@ -150,7 +156,9 @@ void Player::MoveRight() {
     Vector tileRightDown = _game->_board.PointToTile(_pos.x + 14, _pos.y + 14);
 
     if (Tile::Wall == _game->_board.GetTile(tileRightUp) ||
-        Tile::Wall == _game->_board.GetTile(tileRightDown)) {
+        Tile::Wall == _game->_board.GetTile(tileRightDown) ||
+        Tile::House == _game->_board.GetTile(tileRightUp) ||
+        Tile::House == _game->_board.GetTile(tileRightDown)) {
         _pos = sourcePos;
         _orientation = sourceOrientation;
     }

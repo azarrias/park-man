@@ -8,7 +8,7 @@
 
 class Game;
 
-enum class Tile { Wall, Dot, Powerup, Empty };
+enum class Tile { House, Wall, Dot, Powerup, Empty };
 
 class Board {
 public:

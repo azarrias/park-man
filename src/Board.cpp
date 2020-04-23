@@ -52,23 +52,28 @@ std::vector<Tile> Board::ParseLine(std::string line, unsigned short int rownum) 
     std::vector<Tile> row;
     unsigned short int colnum = 0;
     while (sline >> c) {
-        switch (c) {
-            case 'X':
+        switch (c) { // order is important
+            case 'X':   // walls
                 row.emplace_back(Tile::Wall);
                 break;
-            case 'o':
+            case 'o':   // dots
                 row.emplace_back(Tile::Dot);
                 ++_dotsCounter;
                 break;
-            case 'O':
+            case 'O':   // powerup
                 row.emplace_back(Tile::Powerup);
                 ++_dotsCounter;
                 break;
-            case 'P':
+            case 'P':   // player
                 _playerIniPos = Vector{colnum, rownum};
                 row.emplace_back(Tile::Empty);
                 break;
-            case 'E':
+            case 'H':   // ghost house
+                _enemiesIniPos.emplace_back(Vector{ colnum, rownum });
+            case 'B':   // barrier of the ghost house
+                row.emplace_back(Tile::House);
+                break;
+            case 'E':   // enemy
                 _enemiesIniPos.emplace_back(Vector{ colnum, rownum });
             default:
                 row.emplace_back(Tile::Empty);

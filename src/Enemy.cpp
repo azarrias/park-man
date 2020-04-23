@@ -34,3 +34,4 @@ void Enemy::Render() const {
         _animation._frames[_animation._currentFrame].quad.h
     );
 }
+
