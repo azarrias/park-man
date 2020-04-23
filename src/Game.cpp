@@ -58,6 +58,16 @@ bool Game::Update() {
             enemy.Update();
         }
         _player.Update();
+        break;
+
+    case GameState::Win:
+        if (_counter >= _winFrames) {
+            _state = GameState::Start;
+            _counter = 0;
+            Reset();
+        }
+        else
+            ++_counter;
     }
 
     return true;
@@ -73,4 +83,34 @@ void Game::Render() {
     }
     _player.Render();
     _renderer->UpdateScreen();
+}
+
+void Game::CheckWin() {
+    if (_board._dotsCounter == 0) {
+        _state = GameState::Win;
+        _gui.EnableText();
+        _gui.LoadTextureFromText("YOU WIN!", SDL_Color{ 255, 255, 150 });
+    }
+}
+
+bool Game::Reset() {
+    _board._enemiesIniPos.clear();
+
+    // restore board
+    if (!_board.Init())
+        return false;
+
+    // reset player position
+    _player._pos.x = _board._playerIniPos.x * _tileWidth;
+    _player._pos.y = _board._playerIniPos.y * _tileHeight;
+
+    // reset enemy position
+    for (size_t i = 0; i < _board._enemiesIniPos.size(); ++i) {
+        _enemies[i]._pos.x = _board._enemiesIniPos[i].x * _tileWidth;
+        _enemies[i]._pos.y = _board._enemiesIniPos[i].y * _tileHeight;
+    }
+
+    _gui.LoadTextureFromText("READY!", SDL_Color{ 255, 255, 150 });
+
+    return true;
 }

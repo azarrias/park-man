@@ -24,6 +24,8 @@ Tile Board::GetTile(const Vector& coord) const {
 }
 
 bool Board::Init() {
+    _dotsCounter = 0;
+
     if(!LoadFromFile("../assets/map.dat")) {
         std::cerr << "Could not load board from file.\n";
         return false;

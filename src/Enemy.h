@@ -13,12 +13,13 @@ public:
     void Update();
     void Render() const;
 
+    Vector _pos;
+    Vector _size;
+
 private:
     std::shared_ptr<Game> _game;
     Animation _animation;
 
-    Vector _pos;
-    Vector _size;
     static constexpr unsigned short int _speed{ 1 };
 };
 

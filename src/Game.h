@@ -17,6 +17,8 @@ public:
     bool Init();
     bool Update();
     void Render();
+    void CheckWin();
+    bool Reset();
     std::shared_ptr<Game> get_shared_this() { return shared_from_this(); }
     std::shared_ptr<Renderer> _renderer;
     Board _board;
@@ -40,6 +42,7 @@ private:
 
     // variables to handle transitions between game states
     static constexpr unsigned short int _startFrames{ 120 }; // number of frames (60 = 1s)
+    static constexpr unsigned short int _winFrames{ 120 }; // number of frames (60 = 1s)
     unsigned short int _counter;
 };
 

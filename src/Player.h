@@ -33,7 +33,7 @@ private:
     Animation _animation;
     Collider _collider;
 
-    static constexpr unsigned short int _speed{ 1 };
+    static constexpr unsigned short int _speed{ 3 };
 };
 
 #endif

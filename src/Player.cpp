@@ -145,5 +145,6 @@ void Player::HandleCollectibleCollisions(const Vector& tileCoord)
     if (_collider.IsColliding(*this, collectibleCollider)) {
         _game->_board.EmptyTile(tileCoord);
         --_game->_board._dotsCounter;
+        _game->CheckWin();
     }
 }
