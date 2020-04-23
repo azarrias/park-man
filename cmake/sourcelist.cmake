@@ -11,6 +11,8 @@ target_sources(parkman PRIVATE
 	src/Enemy.h
     src/Game.cpp
     src/Game.h
+	src/GUI.cpp
+	src/GUI.h
     src/main.cpp
     src/Player.cpp
     src/Player.h

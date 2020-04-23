@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "Controller.h"
 #include "Enemy.h"
+#include "GUI.h"
 #include "Player.h"
 #include "Renderer.h"
 
@@ -35,9 +36,10 @@ public:
 
 private:
     Controller _controller;
+    GUI _gui;
 
     // variables to handle transitions between game states
-    static constexpr unsigned short int _startFrames{ 180 }; // number of frames (60 = 1s)
+    static constexpr unsigned short int _startFrames{ 120 }; // number of frames (60 = 1s)
     unsigned short int _counter;
 };
 

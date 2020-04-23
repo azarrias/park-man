@@ -28,6 +28,12 @@ bool Game::Init() {
     if (!_enemies[2].Init("../assets/kyle.png")) return false;
     if (!_enemies[3].Init("../assets/stan.png")) return false;
 
+    if (!_gui.Init(*this, "../assets/font.ttf"))
+        return false;
+
+    if (!_gui.LoadTextureFromText("READY!", SDL_Color{ 255, 255, 150 }))
+        return false;
+
     _state = GameState::Start;
 
     return true;
@@ -38,9 +44,11 @@ bool Game::Update() {
     case GameState::Start:
         if (_counter >= _startFrames) {
             _state = GameState::Play;
+            _gui.DisableText();
             _counter = 0;
         }
-        ++_counter;
+        else
+            ++_counter;
         break;
 
     case GameState::Play:
@@ -59,6 +67,7 @@ void Game::Render() {
     _renderer->SetDrawColor(0, 0, 0, 255);
     _renderer->Clear();
     _board.Render();
+    _gui.Render(*this);
     for (const Enemy& enemy : _enemies) {
         enemy.Render();
     }
