@@ -9,6 +9,8 @@
 #include "Player.h"
 #include "Renderer.h"
 
+enum class GameState { Start, Play, Die, Win };
+
 class Game : public std::enable_shared_from_this<Game> {
 public:
     bool Init();
@@ -29,8 +31,14 @@ public:
     static constexpr unsigned short int _dotSize{2};
     static constexpr unsigned short int _powerupSize{4};
 
+    GameState _state;
+
 private:
     Controller _controller;
+
+    // variables to handle transitions between game states
+    static constexpr unsigned short int _startFrames{ 180 }; // number of frames (60 = 1s)
+    unsigned short int _counter;
 };
 
 #endif

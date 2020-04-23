@@ -28,16 +28,30 @@ bool Game::Init() {
     if (!_enemies[2].Init("../assets/kyle.png")) return false;
     if (!_enemies[3].Init("../assets/stan.png")) return false;
 
+    _state = GameState::Start;
+
     return true;
 }
 
 bool Game::Update() {
-    if (!_controller.HandleInput(_player))
-        return false;
-    for (Enemy& enemy : _enemies) {
-        enemy.Update();
+    switch (_state) {
+    case GameState::Start:
+        if (_counter >= _startFrames) {
+            _state = GameState::Play;
+            _counter = 0;
+        }
+        ++_counter;
+        break;
+
+    case GameState::Play:
+        if (!_controller.HandleInput(_player))
+            return false;
+        for (Enemy& enemy : _enemies) {
+            enemy.Update();
+        }
+        _player.Update();
     }
-    _player.Update();
+
     return true;
 }
 
