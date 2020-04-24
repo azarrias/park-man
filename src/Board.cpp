@@ -144,6 +144,7 @@ void Board::Render() {
                         _game->_powerupSize, _game->_powerupSize);
                     break;
                 }
+                case Tile::House:
                 case Tile::Empty:
                     break;
             }
