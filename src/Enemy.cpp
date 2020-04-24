@@ -3,7 +3,8 @@
 #include "Util.h"
 
 Enemy::Enemy(std::shared_ptr<Game> game, Vector pos) 
-: _game(game), _animation(Animation(Texture(game->_renderer)))
+: _size{ 16, 16 }, _game(game), _animation(Animation(Texture(game->_renderer))),
+  _orientation(Orientation::Down)
 {
     // set initial position
     _pos.x = pos.x * _game->_tileWidth;

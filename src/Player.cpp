@@ -30,6 +30,9 @@ bool Player::Init() {
 }
 
 void Player::Update() {
+    for (const Enemy& enemy : _game->_enemies) {
+        HandleEnemyCollisions(enemy);
+    }
     _animation.Update();
 }
 
@@ -187,3 +190,17 @@ void Player::HandleCollectibleCollisions(const Vector& tileCoord) {
         _game->CheckWin();
     }
 }
+
+void Player::HandleEnemyCollisions(const Enemy& enemy) {
+    int enemyColliderSize = 12;
+    Rect enemyCollider{ enemy._pos.x + (enemy._size.x - enemyColliderSize) / 2,
+        enemy._pos.y + (enemy._size.y - enemyColliderSize) / 2,
+        enemyColliderSize, enemyColliderSize };
+    if (_collider.IsColliding(*this, enemyCollider)) {
+        _game->CheckDie();
+    }
+}
+
+
+
+//Vector{ _size.x / 2, _size.y / 2 }, Vector{ 12, 12 });

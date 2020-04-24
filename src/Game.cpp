@@ -68,6 +68,16 @@ bool Game::Update() {
         }
         else
             ++_counter;
+        break;
+
+    case GameState::Die:
+        if (_counter >= _dieFrames) {
+            _state = GameState::Start;
+            _counter = 0;
+            Reset();
+        }
+        else
+            ++_counter;
     }
 
     return true;
@@ -91,6 +101,12 @@ void Game::CheckWin() {
         _gui.EnableText();
         _gui.LoadTextureFromText("YOU WIN!", SDL_Color{ 255, 255, 150 });
     }
+}
+
+void Game::CheckDie() {
+        _state = GameState::Die;
+        _gui.EnableText();
+        _gui.LoadTextureFromText("YOU DIE!", SDL_Color{ 255, 255, 150 });
 }
 
 bool Game::Reset() {

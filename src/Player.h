@@ -3,6 +3,7 @@
 
 #include "Animation.h"
 #include "Collider.h"
+#include "Enemy.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -24,6 +25,7 @@ public:
     void MoveRight();
 
     void HandleCollectibleCollisions(const Vector& tileCoord);
+    void HandleEnemyCollisions(const Enemy& enemy);
 
     Vector _pos;
     Vector _size;
