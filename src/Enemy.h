@@ -16,6 +16,7 @@ public:
 
     Vector _pos;
     Vector _size;
+    Vector _targetPosition;
 
 private:
     bool ReachedDestination() const;
@@ -24,7 +25,6 @@ private:
 
     std::shared_ptr<Game> _game;
     Animation _animation;
-    Vector _targetPosition;
     Orientation _orientation;
 
     static constexpr unsigned short int _speed{ 1 };

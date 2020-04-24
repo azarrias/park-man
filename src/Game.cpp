@@ -124,6 +124,7 @@ bool Game::Reset() {
     for (size_t i = 0; i < _board._enemiesIniPos.size(); ++i) {
         _enemies[i]._pos.x = _board._enemiesIniPos[i].x * _tileWidth;
         _enemies[i]._pos.y = _board._enemiesIniPos[i].y * _tileHeight;
+        _enemies[i]._targetPosition = _enemies[i]._pos;
     }
 
     _gui.LoadTextureFromText("READY!", SDL_Color{ 255, 255, 150 });
