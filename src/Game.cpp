@@ -87,11 +87,11 @@ void Game::Render() {
     _renderer->SetDrawColor(0, 0, 0, 255);
     _renderer->Clear();
     _board.Render();
-    _gui.Render(*this);
     for (const Enemy& enemy : _enemies) {
         enemy.Render();
     }
     _player.Render();
+    _gui.Render(*this);
     _renderer->UpdateScreen();
 }
 
